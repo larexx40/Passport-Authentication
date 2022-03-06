@@ -9,7 +9,14 @@
   <body>
     <div id="login-box">
         <div class="left">
-          <h1>Login in</h1>
+          <h1>Login</h1>
+          <% if (errors.length > 0) { %>
+            <ul class="errors">
+              <% errors.forEach(error => { %>
+                <li><%= error %></li>
+              <% }); %>
+            </ul>
+          <% } %>
           <form action="/login" method="POST">
             <input type="text" name="username" placeholder="Username" />
             

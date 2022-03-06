@@ -10,6 +10,7 @@ const database = require('./database')
 
 
 var usersRouter = require('./routes/userRoute');
+const auth = require('./authenticate');
 
 var app = express();
 
@@ -50,8 +51,9 @@ app.get('/', (req,res)=>{
     res.send("welcome to my authentication test, proceed to login");
 });
 
-app.get('/login', (req, res)=>{
-    res.render('login.ejs');
+app.get('/login', (req, res, next)=>{
+    res.render('login.ejs', {errors: []});
+    
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
@@ -62,10 +64,9 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
         res.redirect('/');
 });
 
-app.post('/login', passport.authenticate('local',{
-    successRedirect: '/header',
-    failureRedirect: '/login'
-}));
+app.post('/login', auth.verifyLogin, (req, res)=>{
+    res.send('input validation passed')
+});
 
 app.get('/header', (req, res)=>{// islogged in because of header.ejs
     res.render('header.ejs', {isLoggedIn:true, name: req.user.username});

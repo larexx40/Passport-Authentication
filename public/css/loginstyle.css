@@ -17,7 +17,7 @@ body {
   position: relative;
   margin: 5% auto;
   width: 600px;
-  height: 400px;
+  height: 500px;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -159,4 +159,16 @@ button.social-signin.twitter {
 
 button.social-signin.google {
   background: #DD4B39;
+}
+.errors {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ED5974;
+  border: 1px solid #e29a9a;
+  padding: 12px 34px;
+  line-height: 1.6;
+  border-radius: 6px;
+  list-style: outside;
+  background-color: #fff;
+  margin-top: 30px;
 }
