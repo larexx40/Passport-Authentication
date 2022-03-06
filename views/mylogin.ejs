@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BLOG</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/send_url.js"></script>
+  </head>
+  <body>
+    <div class="sign">
+      <div class="container">
+        <h1><a href="/list">BLOG</a></h1>
+        <div class="panel">
+          <h2>Log in</h2>
+          <% if (errors.length > 0) { %>
+            <ul class="errors">
+              <% errors.forEach(error => { %>
+                <li><%= error %></li>
+              <% }); %>
+            </ul>
+          <% } %>
+          <form action="/login" method="post">
+            <p>Email</p>
+            <input type="text" name="email">
+            <p>Password</p>
+            <input type="password" name="password">
+            <input type="submit" value="Log in">
+            <a href="/list">Back to articles</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

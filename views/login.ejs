@@ -3,32 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>BLOG</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/loginstyle.css">
     <script src="/send_url.js"></script>
   </head>
   <body>
-    <div class="sign">
-      <div class="container">
-        <h1><a href="/list">BLOG</a></h1>
-        <div class="panel">
-          <h2>Log in</h2>
-          <% if (errors.length > 0) { %>
-            <ul class="errors">
-              <% errors.forEach(error => { %>
-                <li><%= error %></li>
-              <% }); %>
-            </ul>
-          <% } %>
-          <form action="/login" method="post">
-            <p>Email</p>
-            <input type="text" name="email">
-            <p>Password</p>
-            <input type="password" name="password">
-            <input type="submit" value="Log in">
-            <a href="/list">Back to articles</a>
+    <div id="login-box">
+        <div class="left">
+          <h1>Login in</h1>
+          <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username" />
+            
+            <input type="password" name="password" placeholder="Password" />
+            
+            <input type="submit" name="signup_submit" value="Sign up" />
           </form>
         </div>
-      </div>
+        
+        <div class="right">
+          <span class="loginwith">Sign in with<br />social network</span>
+          
+          <a href="/auth/facebook"><button class="social-signin facebook">Log in with facebook</button></a> 
+          <a><button class="social-signin twitter">Log in with Twitter</button></a>
+          <a><button class="social-signin google">Log in with Google+</button></a>
+        </div>
+        <div class="or">OR</div>
     </div>
   </body>
 </html>
