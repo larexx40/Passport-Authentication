@@ -1,0 +1,20 @@
+{
+  "name": "passport-sso",
+  "version": "1.0.0",
+  "description": "\"Single sign one with social identity using passport\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "R. O. Olatunji",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
+    "passport-facebook": "^3.0.0"
+  }
+}
