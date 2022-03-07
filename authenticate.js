@@ -33,3 +33,11 @@ exports.verifyLogin = (req, res, next)=>{
         .catch((err) =>next(err));
     }
 }
+
+exports.isLoggedIn = (req, res, next)=>{
+    if(req.isAuthenticated()){
+        return next();
+    }else{
+        res.redirect('/login');
+    }
+}

@@ -11,8 +11,7 @@ const UserSchema = mongoose.Schema({
         default: ''
     },
     email:{
-        type: String,
-        unique: true
+        type: String
     },
     token:{
         type: String
@@ -20,7 +19,8 @@ const UserSchema = mongoose.Schema({
     admin: {
         type: Boolean,
         default: false
-    }
+    },
+    facebookId:{type: String} 
     
 });
 

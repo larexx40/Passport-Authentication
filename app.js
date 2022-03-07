@@ -15,7 +15,6 @@ const auth = require('./authenticate');
 
 var app = express();
 
-
 //initialize express-session
 const oneHour = 1000 * 60 * 60;
 app.use(session({
@@ -58,7 +57,9 @@ app.get('/login', (req, res, next)=>{
     
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', 
+passport.authenticate('facebook', {scope: ['email']})
+);
 
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/login'}), 
