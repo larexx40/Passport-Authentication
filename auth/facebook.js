@@ -25,6 +25,7 @@ passport.use(new FacebookStrategy({
                 firstname: profile.name.givenName,
                 lastname:profile.name.familyName,
                 email: profile.emails[0].value,
+                picture: profile.photos ? profile.photos[0].value :'no image'
             });
             user.save((err)=>{
                 if(err){

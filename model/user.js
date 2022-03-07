@@ -20,7 +20,8 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    facebookId:{type: String} 
+    facebookId:{type: String},
+    picture:{type: String}
     
 });
 
