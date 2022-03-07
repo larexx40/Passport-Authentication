@@ -5,6 +5,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const localStrategy = require('./auth/passport');
+const FacebookStrategy= require('./auth/facebook')
 const config = require('./config')
 const database = require('./database')
 
@@ -13,6 +14,7 @@ var usersRouter = require('./routes/userRoute');
 const auth = require('./authenticate');
 
 var app = express();
+
 
 //initialize express-session
 const oneHour = 1000 * 60 * 60;
@@ -61,7 +63,7 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/login'}), 
     (req, res)=>{
-        res.redirect('/');
+        res.send('Facebook Authentiacation successful');
 });
 
 app.post('/login', auth.verifyLogin, (req, res)=>{
