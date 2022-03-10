@@ -8,12 +8,14 @@ const localStrategy = require('./auth/passport');
 const FacebookStrategy= require('./auth/facebook')
 const config = require('./config')
 const database = require('./database')
+const flash = require('connect-flash');
 
 
 var usersRouter = require('./routes/userRoute');
 const auth = require('./authenticate');
 
 var app = express();
+app.use(flash());
 
 //initialize express-session
 const oneHour = 1000 * 60 * 60;
@@ -22,7 +24,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie:{
-       maxAge: oneHour 
+       maxAge: oneHour,
+       secure: false 
     }
 }))
 
@@ -64,17 +67,30 @@ passport.authenticate('facebook', {scope: ['email']})
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/login'}), 
     (req, res)=>{
-        res.send('Facebook Authentiacation successful');
+        res.render('dashboard.ejs', {user: req.user});
+        
 });
 
-app.post('/login', auth.verifyLogin, (req, res)=>{
-    res.send('input validation passed')
+//custom login validation !(passport-local)
+app.post('/login',auth.verifyInput, passport.authenticate('local', { 
+    failureRedirect: '/error', 
+    failureFlash: true,
+    }), 
+    (req, res)=>{
+        res.redirect('/dashboard')
 });
+app.get('/error', (req, res, next)=>{
+    res.render('login.ejs', {errors: req.flash('error')})
+})
 
 app.get('/header', (req, res)=>{// islogged in because of header.ejs
     res.render('header.ejs', {isLoggedIn:true, name: req.user.username});
 
 });
+
+app.get('/dashboard', auth.isLoggedIn, (req, res)=>{
+    res.render('dashboard.ejs', {user: req.user});
+})
 
 app.listen('3000', (req, res)=>{
     console.log("Server listening at https://localhost/3000");

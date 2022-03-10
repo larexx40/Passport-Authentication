@@ -17,7 +17,8 @@ passport.use(new FacebookStrategy({
             throw err;
         }
         if(user){
-            done(null, user);
+            console.log(user);
+           return done(null, user);
         }else {
             user= new Users({
                 facebookId: profile.id,
@@ -33,7 +34,8 @@ passport.use(new FacebookStrategy({
                 }else {
                     console.log(user);
                     console.log("saving user");
-                    done(null, user);
+                    return done(null, user);
+                    
                 }
             })
         }

@@ -3,25 +3,22 @@ const LocalStrategy = require('passport-local');
 
 const Users = require('../model/user')
 
-authUser = (username, password, done)=>{
-    console.log(`Value of "User" in authUser function ----> ${username}`);
-    console.log(`Value of "Password" in authUser function ----> ${password}`);
-
-    Users.findOne({username: username}, (err, user)=>{
-        if(err){
-            return done(err, false)
-        }
-        else if(user){
-            return done(null, user)
-        }else{
-            return done(null, false)
-        }
-    })
-
-}
-
-
-passport.use(new LocalStrategy(authUser));
+exports.local = passport.use(new LocalStrategy(
+    (username, password, done)=>{
+        Users.findOne({ username: username }, (err, user)=>{
+            if (err) { 
+                return done(err); 
+            }
+            if (!user) { 
+                return done(null, false, {message: "user does not exist"}); 
+            }
+            if (!(user.password === password)) {
+                 return done(null, false, {message: "incorrect password"}); 
+            }
+            return done(null, user, {message: "Login Successful"});
+        });
+    }
+));
 
 //used to assign id to user in session
 passport.serializeUser( (user, done) => { 
