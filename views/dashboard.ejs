@@ -6,12 +6,13 @@
       <ul>
         <li><a href="/create">Create </a></li>
         <li><a href="/list">Articles</a></li>
-      
+        <li><a href="/">Home</a></li>
+        <% if(isLoggedIn){ %>
           <li><a href="/logout">Log out</a></li>
-        
+        <% }else { %>
           <li><a href="/signup">Sign up</a></li>
           <li><a href="/loginpage">Log in</a></li>
-      
+        <% } %>
       </ul>
     </div>
     <p>Asiwaju's Programming Blog</p>

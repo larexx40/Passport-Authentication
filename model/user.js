@@ -11,7 +11,8 @@ const UserSchema = mongoose.Schema({
         default: ''
     },
     email:{
-        type: String
+        type: String, 
+        unique: false,
     },
     token:{
         type: String
@@ -21,6 +22,7 @@ const UserSchema = mongoose.Schema({
         default: false
     },
     facebookId:{type: String},
+    googleId:{type: String},
     picture:{type: String}
     
 });

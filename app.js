@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const localStrategy = require('./auth/passport');
 const FacebookStrategy= require('./auth/facebook')
+const GoogleStrategy = require('./auth/google');
 const config = require('./config')
 const database = require('./database')
 const flash = require('connect-flash');
@@ -52,7 +53,7 @@ app.use(passport.session());
 app.use('/users', usersRouter);
 
 app.get('/', (req,res)=>{
-    res.send("welcome to my authentication test, proceed to login");
+    res.render('header.ejs', {isLoggedIn: req.isAuthenticated()})
 });
 
 app.get('/login', (req, res, next)=>{
@@ -67,11 +68,21 @@ passport.authenticate('facebook', {scope: ['email']})
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/login'}), 
     (req, res)=>{
-        res.render('dashboard.ejs', {user: req.user});
-        
+        res.redirect('/dashboard');
 });
 
-//custom login validation !(passport-local)
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+app.get('/auth/google/callback', passport.authenticate('google', { 
+    failureRedirect: '/login' }),
+    (req, res)=> {
+    // Successful authentication, redirect home.
+    res.redirect('/dashboard');
+});
+
+//(passport-local)
 app.post('/login',auth.verifyInput, passport.authenticate('local', { 
     failureRedirect: '/error', 
     failureFlash: true,
@@ -89,7 +100,12 @@ app.get('/header', (req, res)=>{// islogged in because of header.ejs
 });
 
 app.get('/dashboard', auth.isLoggedIn, (req, res)=>{
-    res.render('dashboard.ejs', {user: req.user});
+    res.render('dashboard.ejs', {user: req.user, isLoggedIn: req.isAuthenticated()});
+})
+
+app.get('/logout', (req, res)=>{
+    req.logOut();
+    res.send('logout successful, session terminated');
 })
 
 app.listen('3000', (req, res)=>{
